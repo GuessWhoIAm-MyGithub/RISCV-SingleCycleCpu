@@ -15,8 +15,27 @@ initial
         for(i=0;i<32;i=i+1)  registers[i]<=0;//initialization
     end
 
-assign outData1=registers[{27'b0,reg1}];//Fetch data
-assign outData2=registers[{27'b0,reg2}];
+assign outData1=registers[reg1];//Fetch data
+assign outData2=registers[reg2];
+integer j;
+initial j<=0;
+always @(negedge clk) begin
+    $display("clock %d :",j);
+    j=j+1;
+    $display("rf[3] = %h",registers[3]);
+    $display("rf[4] = %h",registers[4]);
+    $display("rf[5] = %h",registers[5]);
+    $display("rf[6] = %h",registers[6]);
+    $display("rf[7] = %h",registers[7]);
+    $display("rf[8] = %h",registers[8]);
+    $display("rf[9] = %h",registers[9]);
+    $display("rf[10] = %h",registers[10]);
+    $display("rf[23] = %h",registers[23]);
+    $display("rf[24] = %h",registers[24]);
+    $display("rf[27] = %h",registers[27]);
+    $display("rf[28] = %h",registers[28]);
+    
+end
 always@(negedge clk)//negeedge to write data
     begin
         if(RegWrite) 

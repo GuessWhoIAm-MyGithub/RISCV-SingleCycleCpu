@@ -10,7 +10,9 @@ parameter ins_addr=16;//2^16=64MB指令空间
 reg[31:0] instructions_mem[(2**(ins_addr)-1):0];
 initial
 begin
-$readmemh ("F:/Files/SingleCycleProcessor/testInstructions/testIns3.txt",instructions_mem);
+$readmemh ("F:/Files/SingleCycleProcessor/testInstructions/testIns4.txt",instructions_mem);
 end
 assign instruction=instructions_mem[pc>>2];
 endmodule //Instruction_Mem
+
+

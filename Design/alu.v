@@ -21,6 +21,11 @@ case(operation)
         result<=src1+src2;
         zero<=0;
     end
+    `ALU_SUB:
+    begin
+        result<=src1-src2;
+        zero<=0;
+    end
     `ALU_ADD4:
     begin
         result<=src1+4;
@@ -84,11 +89,11 @@ case(operation)
             zero<=0;
         end
     `ALU_SLT:begin
-            result<=$signed(src1)<$signed(src2);
+            result<=($signed(src1)<$signed(src2));
             zero<=0;
         end
     `ALU_SLTU:begin
-            result<=src1<src2;
+            result<=(src1<src2);
             zero<=0;
         end
 endcase

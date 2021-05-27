@@ -17,6 +17,15 @@ initial
     begin
         for(i=0;i<2**DM_addr;i=i+1) Memory[i]=32'b0;
     end
+always @(posedge clk) begin
+
+    $display("Mem[0] = %h",Memory[0]);
+    $display("Mem[1] = %h",Memory[1]);
+    $display("Mem[2] = %h",Memory[2]);
+    $display("Mem[3] = %h",Memory[3]); 
+    $display("------------------------"); 
+end
+
 
 always @(*) //读数据
    begin

@@ -21,7 +21,7 @@
 `define ALU_AND 5'b01000  
 `define ALU_SLTU 5'b10000
 `define ALU_ADD_LUI 5'b01111
-`define ALU_ADD4 5'b10000 
+`define ALU_ADD4 5'b10001 
 
 //`define ALU_ADD_AUIPC 5'b10000 
 //JUMP CONDITIONS 
