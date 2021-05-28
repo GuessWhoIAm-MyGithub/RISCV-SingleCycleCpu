@@ -18,7 +18,7 @@ begin
         `AUIPC:
             imm_out[31:0]={instruction[31:12],12'b0};
         `JAL:
-            imm_out[31:0]={{12{instruction[31]}},instruction[31],instruction[19:12],instruction[20],instruction[30:21]};
+            imm_out[31:0]={{12{instruction[31]}},instruction[31],instruction[19:12],instruction[20],instruction[30:21],1'b0};
         `JALR:
             imm_out[31:0]={{20{instruction[31]}},instruction[31:20]};
         `B_TYPE:
@@ -28,7 +28,7 @@ begin
         `S_TYPE:
             imm_out[31:0]={{20{instruction[31]}},instruction[31:25],instruction[11:7]};
         `R_IMM:
-            imm_out[31:0]=(instruction[12]&!instruction[13])?{{27{instruction[24]}},instruction[24:20]}:{{20{instruction[31]}},instruction[31:20]};
+            imm_out[31:0]=(instruction[12]&!instruction[13])?{{27{instruction[31]}},instruction[24:20]}:{{20{instruction[31]}},instruction[31:20]};
 
     endcase
 end

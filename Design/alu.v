@@ -65,7 +65,7 @@ case(operation)
         end
     `ALU_SRA:
         begin
-            result<=$signed(src1)>>$signed(src2);
+            result<=$signed(src1)>>>$signed(src2);
             zero<=0;
         end
     `ALU_SLL:
@@ -93,7 +93,7 @@ case(operation)
             zero<=0;
         end
     `ALU_SLTU:begin
-            result<=(src1<src2);
+            result<=($unsigned(src1)<$unsigned(src2));
             zero<=0;
         end
 endcase

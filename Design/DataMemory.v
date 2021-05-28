@@ -12,7 +12,7 @@ integer i;
 initial begin
 data=0;
 end
-reg [7:0] Memory[16-1:0];//64MB内存
+reg [7:0] Memory[128-1:0];//64MB内存
 initial
     begin
         for(i=0;i<2**DM_addr;i=i+1) Memory[i]=32'b0;

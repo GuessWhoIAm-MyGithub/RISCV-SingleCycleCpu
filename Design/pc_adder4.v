@@ -6,17 +6,20 @@ module pc_adder (
     input Branch,
     input zero,
     input jalr,
+    input jal,
     output reg[31:0] next_pc
 );
 initial begin
     next_pc=0;
 end
 always @(*) begin//mux is achieved here
-    if(Branch&zero&(~jalr))
+    if(Branch&&zero&&~jalr)//beq
         next_pc=(now_pc+imm)&32'h0000FFFF;
-    else if(Branch&zero&jalr)
+    if(Branch&&zero&&jalr)//jalr
         next_pc=(readData1+imm)&32'h0000FFFF;//对jalr单独一种情况
-    else 
+    if(Branch&&zero&&jal)
+        next_pc=(now_pc+imm)&32'h0000FFFF;
+    if(~zero&&~jal&&~jalr) 
         next_pc=now_pc+4; 
         
 

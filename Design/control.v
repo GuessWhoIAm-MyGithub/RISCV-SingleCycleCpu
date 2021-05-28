@@ -16,6 +16,7 @@ module control(
     output reg Branch,
     output reg Add4,
     output reg jalr,
+    output reg jal,
     output reg [4:0]Aluop
 );
 
@@ -29,6 +30,7 @@ RegWrite<=0;
 Add4<=0;
 Branch<=0;
 jalr<=0;
+jal<=0;
 Aluop[4:0]<=0;
 end
 // assign Alusrc=(opcode==I_TYPE)|(opcode==S_TYPE)|(opcode==R_IMM);
@@ -56,6 +58,7 @@ begin
       MemtoReg<=0;
       Add4<=0;
       jalr<=0;
+      jal<=0;
     end
     //auipc
     `AUIPC:
@@ -70,6 +73,7 @@ begin
       MemtoReg<=0;
       Add4<=0;
       jalr<=0;
+      jal<=0;
 
     end
       //jal
@@ -83,7 +87,8 @@ begin
       MemRead[2:0]<=0;
       Branch<=1;
       Add4<=1;
-      jalr<=1;
+      jalr<=0;
+      jal<=1;
       MemtoReg<=0;
     end
     //jalr
@@ -98,6 +103,7 @@ begin
       Branch<=1;
       Add4<=1;
       jalr<=1;
+      jal<=0;
       MemtoReg<=0;
     end
     //beq etc.
@@ -111,6 +117,7 @@ begin
       Branch<=1;
       MemtoReg<=0;
       jalr<=0;
+      jal<=0;
       Add4<=0;
       
       case (func3)
@@ -144,6 +151,7 @@ begin
       MemWrite[1:0]<=0;
       Branch<=0;
       jalr<=0;
+      jal<=0;
       Add4<=0;
         case(func3)
           `FUNC3_LB: MemRead[2:0]<=`MEMREAD_LB;
@@ -163,6 +171,7 @@ begin
       MemRead[2:0]<=0;
       Branch<=0;
       jalr<=0;
+      jal<=0;
       Add4<=0;
       case(func3)
         `FUNC3_SB:MemWrite[1:0]<=`MEMWRITE_SB;
@@ -180,16 +189,17 @@ begin
       MemWrite[1:0]<=0;
       Branch<=0;
       jalr<=0;
+      jal<=0;
       Add4<=0;
       case(func3)
-        3'b101:Aluop[4:0]<=(func7[6:0]===7'b0000000)?`ALU_SRL:`ALU_SRA;
-        3'b001:Aluop[4:0]<=`ALU_SLL;
-        3'b111:Aluop[4:0]<=`ALU_AND;
-        3'b110:Aluop[4:0]<=`ALU_OR;
-        3'b100:Aluop[4:0]<=`ALU_XOR;
-        3'b011:Aluop[4:0]<=`ALU_SLTU;
-        3'b010:Aluop[4:0]<=`ALU_SLT;
-        3'b000:Aluop[4:0]<=`ALU_ADD;
+        3'b101:Aluop[4:0]=(func7[6:0]===7'b0000000)?`ALU_SRL:`ALU_SRA;
+        3'b001:Aluop[4:0]=`ALU_SLL;
+        3'b111:Aluop[4:0]=`ALU_AND;
+        3'b110:Aluop[4:0]=`ALU_OR;
+        3'b100:Aluop[4:0]=`ALU_XOR;
+        3'b011:Aluop[4:0]=`ALU_SLTU;
+        3'b010:Aluop[4:0]=`ALU_SLT;
+        3'b000:Aluop[4:0]=`ALU_ADD;
       endcase
     end
      `R_TYPE:
@@ -202,12 +212,13 @@ begin
       MemWrite[1:0]<=0;
       Branch<=0;
       jalr<=0;
+      jal<=0;
       Add4<=0;
         case(func3)
           3'b000:Aluop=(func7==7'b0000000)?`ALU_ADD:`ALU_SUB;
           3'b001:Aluop=`ALU_SLL;
           3'b010:Aluop=`ALU_SLT;
-          3'b011:Aluop=`ALU_SLT;
+          3'b011:Aluop=`ALU_SLTU;
           3'b100:Aluop=`ALU_XOR;
           3'b101:Aluop=(func7==7'b0000000)?`ALU_SRL:`ALU_SRA;
           3'b110:Aluop=`ALU_OR;
