@@ -14,7 +14,7 @@ wire MemtoReg,RegWrite;
 wire [2:0]MemRead;
 wire [1:0]MemWrite;
 wire [4:0] Aluop;
-wire jalr;
+wire jalr,jal;
 wire Alusrc1,Alusrc2;
 wire Add4;
 reg clk,rstn;
@@ -52,6 +52,7 @@ pc_adder testpc_adder(
 .Branch(Branch),
 .zero(zero),
 .jalr(jalr),
+.jal(jal),
 .next_pc(next_pc)
 );
 
@@ -81,6 +82,7 @@ control  testcontrol(
 .Branch(Branch),
 .Add4(Add4),
 .jalr(jalr),
+.jal(jal),
 .Aluop(Aluop)
 );
 
